@@ -7,6 +7,29 @@ from const import *
 
 print("2")
 
+
+message_list = []
+
+def get_message():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
+    sock.bind(SOURCE_TO_BROKER.get_listener()) # Socket listens from the Source
+    sock.listen(2) # This socket can listen 2 connection.
+    conn, addr = sock.accept() # we get the connection from the source 
+    while 1:
+        data = conn.recv(500).decode()
+        if not data:
+            break
+        print(data)
+        message_list.append(data)
+    conn.close()
+
+
+
+broker_listen = threading.Thread(target= get_message, args=())
+broker_listen.start()
+
+
+
 random = 0  # To decide where to send the next packet R1 or R2
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
 sock.bind(SOURCE_TO_BROKER.get_listener()) # Socket listens from the Source
@@ -37,4 +60,3 @@ while 1: # inf loop
 
 
     
-conn.close()
