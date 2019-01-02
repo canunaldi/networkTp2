@@ -3,7 +3,6 @@ import string
 from socket import socket, AF_INET, SOCK_STREAM
 import time
 import threading
-from const import *
 
 
 id = 999 #Packet Id started from 999 -> 1000(will be 1000 in first loop) in order to store Id sized 4 in all packets.
