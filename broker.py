@@ -5,13 +5,13 @@ import time
 import threading
 
 print("2")
-SOURCE_TO_BROKER = 10.10.1.2
+SOURCE_TO_BROKER = '10.10.1.2'
 
 message_list = []
 
 def get_message():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
-    sock.bind(SOURCE_TO_BROKER.get_listener()) # Socket listens from the Source
+    sock.bind(SOURCE_TO_BROKER, 3000) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
     conn, addr = sock.accept() # we get the connection from the source 
     while 1:
