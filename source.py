@@ -4,6 +4,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 import time
 import threading
 
+SOURCE_TO_BROKER = '10.10.1.2'
 
 id = 999 #Packet Id started from 999 -> 1000(will be 1000 in first loop) in order to store Id sized 4 in all packets.
 def generate_message(): # Generates message with using Id and current time
