@@ -17,7 +17,7 @@ def generate_message(): # Generates message with using Id and current time
 
 
 sock = socket(AF_INET, SOCK_STREAM) # new socket
-sock.connect(SOURCE_TO_BROKER, 3000) # Connects to the link between source and the broker
+sock.connect((SOURCE_TO_BROKER, 3000)) # Connects to the link between source and the broker
 
 with open("dosya.txt", "r") as f:
     for i in range(200):
