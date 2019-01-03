@@ -3,6 +3,7 @@ import string
 import socket
 import time
 import threading
+from threading import *
 
 SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
@@ -11,7 +12,7 @@ window_size = 10
 base = 0
 next_seqnum = 0
 coming_messagenum=0
-
+lock = Lock()
 message_list = []
 flag = 0
 def get_message():
