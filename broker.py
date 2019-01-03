@@ -8,13 +8,14 @@ SOURCE_TO_BROKER = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
 R1_TO_BROKER_send = '10.10.3.2'
 
-message_list = ["Deneme"]
+message_list = []
 flag = 0
 def get_message():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
     sock.bind((SOURCE_TO_BROKER, 2999)) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
-    conn, addr = sock.accept() # we get the connection from the source 
+    conn, addr = sock.accept() # we get the connection from the source
+    print("READY TO GET")
     count = 0
     while 1:
         data = conn.recv(500)
