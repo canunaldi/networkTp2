@@ -53,13 +53,13 @@ def send():
                 if len(message_list) > next_seqnum:
                     #print("ML: ",len(message_list)) 
                     #print("NSq:", next_seqnum)
-                    print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
+                    #print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
                     seq = str(next_seqnum)
                     while 1:
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    print(seq)
+                    #print(seq)
                     message = message_list[next_seqnum] + str(seq)  
                     count +=1
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
@@ -71,13 +71,13 @@ def send():
                 if len(message_list) > next_seqnum:
                     #print("ML: ",len(message_list)) 
                     #print("NSq:", next_seqnum)
-                    print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
+                    #print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
                     seq = str(next_seqnum)
                     while 1:
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    print(seq)
+                    #print(seq)
 
                     message = message_list[next_seqnum] + str(seq)  
                     count +=1
@@ -86,22 +86,33 @@ def send():
                     #time.sleep(0.2)
                 lock.release()
 
-def get_ack():
+def get_ack_r1():
     R1_ack = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1_ack.bind((R1_TO_BROKER_bind, 3004))
-    R2_ack = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    R2_ack.bind((R2_TO_BROKER_bind, 3006))
-
+    while 1:
+        data,addr = R1_ack.recvfrom(6)
+        print(data)
     
 
+
+    
+def get_ack_r2():
+    R2_ack = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    R2_ack.bind((R2_TO_BROKER_bind, 3006))
+    while 1:
+        data,addr = R2_ack.recvfrom(6)
+        print(data)
 
 
 
 broker_listen = threading.Thread(target= get_message, args=())
-ack_getter = threading.Thread(target= get_ack)
+ack_getter_r1 = threading.Thread(target= get_ack_r1)
+ack_getter_r2 = threading.Thread(target= get_ack_r2)
+
 broker_listen.start()
 
-ack_getter.start()
+ack_getter_r1.start()
+ack_getter_r2.start()
 send()
 
 
