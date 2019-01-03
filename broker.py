@@ -8,6 +8,8 @@ from threading import *
 SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
 R1_TO_BROKER_send = '10.10.3.2'
+R2_TO_BROKER_send = '10.10.5.2'
+R2_TO_BROKER_bind = '10.10.4.1'
 window_size = 10
 base = 0
 next_seqnum = 0
@@ -35,22 +37,37 @@ def get_message():
     conn.close()
 
 
-def send_r1():
+def send():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
+    R2Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    R2Socket.bind((R2_TO_BROKER_bind, 3002))
     global next_seqnum
     count = 0
     while 1:
-        lock.acquire()
-        if len(message_list) > next_seqnum:
-            #print("ML: ",len(message_list)) 
-            #print("NSq:", next_seqnum)
-            print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))  
-            count +=1
-            R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
-            next_seqnum +=1
-            time.sleep(0.2)
-        lock.release()
+        randomvar = random.randint(1,2)
+        if randomvar == 1:
+            lock.acquire()
+            if len(message_list) > next_seqnum:
+                #print("ML: ",len(message_list)) 
+                #print("NSq:", next_seqnum)
+                print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))  
+                count +=1
+                R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
+                next_seqnum +=1
+                time.sleep(0.2)
+            lock.release()
+        else:
+            lock.acquire()
+            if len(message_list) > next_seqnum:
+                #print("ML: ",len(message_list)) 
+                #print("NSq:", next_seqnum)
+                print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))  
+                count +=1
+                R1Socket.sendto(message_list[next_seqnum],(R2_TO_BROKER_send,3003))
+                next_seqnum +=1
+                time.sleep(0.2)
+            lock.release()
 
 
 
