@@ -52,7 +52,7 @@ def deneme():
     for elem in coming_messages[0]:
         if elem != '0':
             indexes.append(i)
-            i +=1
+        i +=1
         result += elem
     print(indexes)
     print(result)
