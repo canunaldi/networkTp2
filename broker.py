@@ -41,7 +41,7 @@ def send_r1():
     global next_seqnum
     count = 0
     while 1:
-        #lock.acquire()
+        lock.acquire()
         if len(message_list) > next_seqnum:
             #print("ML: ",len(message_list)) 
             #print("NSq:", next_seqnum)
@@ -49,7 +49,8 @@ def send_r1():
             count +=1
             R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
             next_seqnum +=1
-        #lock.release()
+            time.sleep(0.2)
+        lock.release()
 
 
 
