@@ -15,7 +15,7 @@ def get_from_r1():
     R1Socket.bind((R1_TO_BROKER,3001))
     count = 0
     while 1:
-        data,addr = R1Socket.recvfrom(500)
+        data,addr = R1Socket.recvfrom(506)
         #print("Num:", count, "len:", len(data))
         print(data)
         count +=1
@@ -25,7 +25,7 @@ def get_from_r2():
     R2Socket.bind((R2_TO_BROKER,3003))
     count = 0
     while 1:
-        data,addr = R2Socket.recvfrom(500)
+        data,addr = R2Socket.recvfrom(506)
         #print("Num:", count, "len:", len(data))
         print(data)
         count +=1
