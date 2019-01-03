@@ -104,6 +104,8 @@ def send():
                 lock.release()
         else:
             print("HELLO")
+            print("Base: ",base)
+            print("Nextseq: ", next_seqnum)
             wait_timeout()
             print(missing_list)
             for elem in missing_list:
