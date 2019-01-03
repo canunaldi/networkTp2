@@ -45,7 +45,7 @@ def send_r1():
         if len(message_list) > next_seqnum:
             #print("ML: ",len(message_list)) 
             #print("NSq:", next_seqnum)
-            print("Send:" count, " len:",len(message_list[next_seqnum]))  
+            print("Send:", count, " len:",len(message_list[next_seqnum]))  
             count +=1
             R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
             next_seqnum +=1
