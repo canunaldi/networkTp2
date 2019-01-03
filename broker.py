@@ -5,7 +5,7 @@ import time
 import threading
 
 SOURCE_TO_BROKER = '10.10.1.2'
-R1_TO_BROKER = '10.10.2.1'
+R1_TO_BROKER = '10.10.3.2'
 
 message_list = ["Deneme"]
 flag = 0
