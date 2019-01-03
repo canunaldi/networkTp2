@@ -8,7 +8,7 @@ print("2")
 SOURCE_TO_BROKER = '10.10.1.2'
 R1_TO_BROKER = '10.10.2.1'
 
-message_list = []
+message_list = ["Deneme"]
 
 def get_message():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
@@ -28,7 +28,7 @@ def get_message():
 def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER, 3000))
-    R1Socket.sendto(message_list[0](R1_TO_BROKER,3001))
+    R1Socket.sendto(message_list[0],(R1_TO_BROKER,3001))
 
 
 
