@@ -11,13 +11,13 @@ R1_TO_BROKER_send = '10.10.3.2'
 window_size = 10
 base = 0
 next_seqnum = 0
-coming_messagenum=0
+next_seqnum=0
 lock = Lock()
 message_list = []
 flag = 0
 def get_message():
     global flag
-    global coming_messagenum
+    global next_seqnum
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
     sock.bind((SOURCE_TO_BROKER, 2999)) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
@@ -31,7 +31,6 @@ def get_message():
         lock.acquire()
         message_list.append(data)
         print(len(message_list))
-        coming_messagenum += 1
         lock.release()
         print(data)
     conn.close()
@@ -40,10 +39,12 @@ def get_message():
 def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
+    global next_seqnum
     while 1:
-        if len(message_list) > coming_messagenum:
+        if len(message_list) > next_seqnum:
             lock.acquire()
-            R1Socket.sendto(message_list[coming_messagenum],(R1_TO_BROKER_send,3001))
+            R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
+            next_seqnum +=1
             lock.release()
 
 
