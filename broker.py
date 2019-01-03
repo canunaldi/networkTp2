@@ -120,6 +120,7 @@ def send():
                     base = elem
                     message = message_list[elem] + str(seq)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                    missing_list.remove(elem)
                 else:
                     seq = str(elem)
                     while 1:
@@ -130,8 +131,9 @@ def send():
                     base = elem
                     message = message_list[elem] + str(seq) 
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                    missing_list.remove(elem)
                 start_timeout()
-            missing_list = []
+            
 
 
 def get_ack_r1():
