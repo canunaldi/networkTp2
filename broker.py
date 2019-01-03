@@ -44,7 +44,8 @@ def start_timeout():
 
 def wait_timeout():
     global timeout
-    time.sleep(0.2-timeout)
+    left = time.time() -timeout
+    time.sleep(0.2-left)
 
 def send():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
