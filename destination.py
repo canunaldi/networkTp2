@@ -47,7 +47,7 @@ def get_from_r2():
 def deneme():
     time.sleep(10)
     result = ''
-    for elem in coming_messages:
+    for elem in coming_messages[0]:
         result += elem
     print(result)
 
