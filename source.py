@@ -24,4 +24,4 @@ with open("dosya.txt", "r") as f:
         message = f.read(500)
         #print(message)
         print(len(message))
-        sock.send(message)
+        sock.send(message.encode())
