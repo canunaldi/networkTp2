@@ -41,7 +41,9 @@ def send_r1():
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
     while 1:
         if len(message_list) > coming_messagenum:
-            R1Socket.sendto(message_list[0],(R1_TO_BROKER_send,3001))
+            lock.acquire()
+            R1Socket.sendto(message_list[coming_messagenum],(R1_TO_BROKER_send,3001))
+            lock.release()
 
 
 
