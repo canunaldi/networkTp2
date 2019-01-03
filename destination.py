@@ -46,7 +46,10 @@ def get_from_r2():
 
 def deneme():
     time.sleep(10)
-    print(coming_messages)
+    result = ''
+    for elem in coming_messages:
+        result += elem
+    print(result)
 
 
 th1 = threading.Thread(target=get_from_r1)
