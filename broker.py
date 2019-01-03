@@ -11,7 +11,6 @@ R1_TO_BROKER_send = '10.10.3.2'
 window_size = 10
 base = 0
 next_seqnum = 0
-next_seqnum=0
 lock = Lock()
 message_list = []
 flag = 0
@@ -30,7 +29,7 @@ def get_message():
         lock.acquire()
         message_list.append(data)
         lock.release()
-        print(data)
+        #print(data)
     conn.close()
 
 
@@ -40,7 +39,9 @@ def send_r1():
     global next_seqnum
     while 1:
         lock.acquire()
-        if len(message_list) > next_seqnum:    
+        if len(message_list) > next_seqnum:
+            print("ML: ",len(message_list)) 
+            print("NSq:", next_seqnum)  
             R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
             next_seqnum +=1
         lock.release()
