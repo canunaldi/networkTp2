@@ -17,6 +17,7 @@ lock = Lock()
 message_list = []
 flag = 0
 missing_list = []
+timeout = 0
 def get_message():
     global flag
     global next_seqnum
@@ -37,6 +38,13 @@ def get_message():
         #print(data)
     conn.close()
 
+def start_timeout():
+    global timeout
+    timeout = time.time()
+
+def wait_timeout():
+    global timeout
+    time.sleep(0.2-timeout)
 
 def send():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -68,6 +76,7 @@ def send():
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                     next_seqnum +=1
                     #time.sleep(0.2)
+                start_timeout()
                 lock.release()
             else:
                 lock.acquire()
@@ -88,7 +97,33 @@ def send():
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
                     next_seqnum +=1
                     #time.sleep(0.2)
+                start_timeout()
                 lock.release()
+        else:
+            wait_timeout()
+            for elem in missing_list:
+                randomvar = random.randint(1,2)
+                if randomvar == 1:
+                    seq = str(elem)
+                    while 1:
+                        if len(seq) == 6:
+                            break
+                        seq = "0" + seq
+                    #print(seq)
+                    message = message_list[elem] + str(seq)
+                    R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                else:
+                    seq = str(elem)
+                    while 1:
+                        if len(seq) == 6:
+                            break
+                        seq = "0" + seq
+                    #print(seq)
+
+                    message = message_list[elem] + str(seq) 
+                    R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                start_timeout()
+
 
 def get_ack_r1():
     global missing_list
@@ -97,12 +132,14 @@ def get_ack_r1():
     R1_ack.bind((R1_TO_BROKER_bind, 3004))
     while 1:
         data,addr = R1_ack.recvfrom(6)
+        start_timeout()
         data = int(data)
         if data in missing_list:
             missing_list.remove(data)
         if len(missing_list)>0:
             base = min(missing_list)
         print(data)
+
     
 
 
@@ -114,6 +151,7 @@ def get_ack_r2():
     R2_ack.bind((R2_TO_BROKER_bind, 3006))
     while 1:
         data,addr = R2_ack.recvfrom(6)
+        start_timeout()
         data = int(data)
         if data in missing_list:
             missing_list.remove(data)
