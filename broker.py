@@ -11,6 +11,7 @@ R1_TO_BROKER_send = '10.10.3.2'
 message_list = []
 flag = 0
 def get_message():
+    global flag
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
     sock.bind((SOURCE_TO_BROKER, 2999)) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
