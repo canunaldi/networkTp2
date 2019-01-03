@@ -16,6 +16,7 @@ next_seqnum = 0
 lock = Lock()
 message_list = []
 flag = 0
+missing_list = []
 def get_message():
     global flag
     global next_seqnum
@@ -44,6 +45,7 @@ def send():
     R2Socket.bind((R2_TO_BROKER_bind, 3002))
     global next_seqnum
     global base
+    global missing_list
     count = 0
     while 1:
         if (next_seqnum - base) < 10 :
@@ -60,7 +62,8 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
-                    message = message_list[next_seqnum] + str(seq)  
+                    message = message_list[next_seqnum] + str(seq)
+                    missing_list.append(next_seqnum)  
                     count +=1
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                     next_seqnum +=1
@@ -79,7 +82,8 @@ def send():
                         seq = "0" + seq
                     #print(seq)
 
-                    message = message_list[next_seqnum] + str(seq)  
+                    message = message_list[next_seqnum] + str(seq) 
+                    missing_list.append(next_seqnum)   
                     count +=1
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
                     next_seqnum +=1
@@ -87,20 +91,32 @@ def send():
                 lock.release()
 
 def get_ack_r1():
+    global missing_list
+    global base
     R1_ack = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1_ack.bind((R1_TO_BROKER_bind, 3004))
     while 1:
         data,addr = R1_ack.recvfrom(6)
+        data = int(data)
+        if data in missing_list:
+            missing_list.remove(data)
+        base = min(missing_list)
         print(data)
     
 
 
     
 def get_ack_r2():
+    global missing_list
+    global base
     R2_ack = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R2_ack.bind((R2_TO_BROKER_bind, 3006))
     while 1:
         data,addr = R2_ack.recvfrom(6)
+        data = int(data)
+        if data in missing_list:
+            missing_list.remove(data)
+        base = min(missing_list)
         print(data)
 
 
