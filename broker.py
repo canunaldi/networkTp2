@@ -21,6 +21,7 @@ def get_message():
         if not data:
             break
         message_list.append(data)
+        print(data)
     conn.close()
 
 
