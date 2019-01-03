@@ -45,7 +45,7 @@ def get_from_r2():
         R2Ack.sendto(data[500:],(R2_TO_BROKER_send,3006))
 
 def deneme():
-    time.sleep(10)
+    time.sleep(20)
     result = ''
     i = 0
     indexes = []
