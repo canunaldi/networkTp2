@@ -30,6 +30,7 @@ def get_message():
             break
         lock.acquire()
         message_list.append(data)
+        print(len(message_list))
         coming_messagenum += 1
         lock.release()
         print(data)
