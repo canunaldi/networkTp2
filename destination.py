@@ -15,7 +15,8 @@ def get_from_r1():
     count = 0
     while 1:
         data,addr = R1Socket.recvfrom(500)
-        print("Num:", count, "len:", len(data))
+        #print("Num:", count, "len:", len(data))
+        print(data)
         count +=1
 
 get_from_r1()
