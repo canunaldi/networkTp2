@@ -6,6 +6,7 @@ import threading
 
 print("2")
 SOURCE_TO_BROKER = '10.10.1.2'
+R1_TO_BROKER = '10.10.3.2'
 
 message_list = []
 
@@ -21,16 +22,19 @@ def get_message():
             break
         #print(data)
         message_list.append(data)
-        count +=1
-        if count == 195:
-            for mes in message_list:
-                print(mes)
     conn.close()
+
+
+def send_r1():
+    R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    R1Socket.bind((R1_TO_BROKER, 3000))
+    R1Socket.sendto(message_list[0](R1_TO_BROKER,3001))
 
 
 
 broker_listen = threading.Thread(target= get_message, args=())
 broker_listen.start()
+send_r1()
 
 
 
