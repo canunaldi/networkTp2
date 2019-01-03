@@ -30,10 +30,8 @@ def get_message():
         data = conn.recv(500,socket.MSG_WAITALL).decode()
         if not data:
             break
-        lock.acquire()
         #print("ML:",count, " len:",len(data))
         message_list.append(data)
-        lock.release()
         count +=1
         #print(data)
     conn.close()
@@ -120,7 +118,6 @@ def send():
                     base = elem
                     message = message_list[elem] + str(seq)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                    missing_list.remove(elem)
                 else:
                     seq = str(elem)
                     while 1:
@@ -131,8 +128,10 @@ def send():
                     base = elem
                     message = message_list[elem] + str(seq) 
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                    missing_list.remove(elem)
                 start_timeout()
+            lock.acquire()
+            missing_list = []
+            lock.release()
             
 
 
@@ -145,10 +144,12 @@ def get_ack_r1():
         data,addr = R1_ack.recvfrom(6)
         start_timeout()
         data = int(data)
+        lock.acquire()
         if data in missing_list:
             missing_list.remove(data)
         if len(missing_list)>0:
             base = min(missing_list)
+        lock.release()
         print(data)
 
     
@@ -164,10 +165,13 @@ def get_ack_r2():
         data,addr = R2_ack.recvfrom(6)
         start_timeout()
         data = int(data)
+        lock.acquire()
         if data in missing_list:
             missing_list.remove(data)
         if len(missing_list)>0:
             base = min(missing_list)
+        lock.release()
+
         print(data)
 
 
