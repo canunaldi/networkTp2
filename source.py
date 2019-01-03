@@ -22,5 +22,6 @@ sock.connect((SOURCE_TO_BROKER, 2999)) # Connects to the link between source and
 with open("dosya.txt", "r") as f:
     for i in range(200):
         message = f.read(500)
-        print(message)
+        #print(message)
+        print(len(message))
         sock.send(message)
