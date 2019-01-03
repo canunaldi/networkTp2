@@ -19,7 +19,7 @@ def get_message():
         data = conn.recv(500).decode()
         if not data:
             break
-        print(data)
+        #print(data)
         message_list.append(data)
         count +=1
         if count == 195:
