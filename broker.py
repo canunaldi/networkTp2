@@ -38,7 +38,7 @@ def send_r1():
 
 broker_listen = threading.Thread(target= get_message, args=())
 broker_listen.start()
-
+send_r1()
 
 
 
