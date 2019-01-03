@@ -38,13 +38,13 @@ def send_r1():
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
     global next_seqnum
     while 1:
-        lock.acquire()
+        #lock.acquire()
         if len(message_list) > next_seqnum:
             print("ML: ",len(message_list)) 
             print("NSq:", next_seqnum)  
             R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
             next_seqnum +=1
-        lock.release()
+        #lock.release()
 
 
 
