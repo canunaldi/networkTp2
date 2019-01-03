@@ -31,7 +31,7 @@ def get_message():
         if not data:
             break
         lock.acquire()
-        print("ML:",count, " len:",len(data))
+        #print("ML:",count, " len:",len(data))
         message_list.append(data)
         lock.release()
         count +=1
