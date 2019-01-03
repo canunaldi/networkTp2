@@ -47,8 +47,13 @@ def get_from_r2():
 def deneme():
     time.sleep(10)
     result = ''
+    i = 0
+    indexes = []
     for elem in coming_messages[0]:
+        indexes.append(i)
+        i +=1
         result += elem
+    print(indexes)
     print(result)
 
 
