@@ -27,8 +27,10 @@ def get_message():
         if not data:
             break
         lock.acquire()
+        print("ML:",count, " len:",len(data))
         message_list.append(data)
         lock.release()
+        count +=1
         #print(data)
     conn.close()
 
@@ -37,12 +39,14 @@ def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
     global next_seqnum
+    count = 0
     while 1:
         #lock.acquire()
         if len(message_list) > next_seqnum:
             #print("ML: ",len(message_list)) 
-            print("NSq:", next_seqnum)
-            print(len(message_list[next_seqnum]))  
+            #print("NSq:", next_seqnum)
+            print("Send:" count, " len:",len(message_list[next_seqnum]))  
+            count +=1
             R1Socket.sendto(message_list[next_seqnum],(R1_TO_BROKER_send,3001))
             next_seqnum +=1
         #lock.release()
