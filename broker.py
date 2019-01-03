@@ -73,6 +73,11 @@ def send():
                     #print("NSq:", next_seqnum)
                     print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
                     seq = str(next_seqnum)
+                    while 1:
+                        if len(seq) == 6:
+                            break
+                        seq = 0 + seq
+                    print(seq)
                     message = message_list[next_seqnum] + str(seq)  
                     count +=1
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
