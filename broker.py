@@ -45,8 +45,9 @@ def start_timeout():
 def wait_timeout():
     global timeout
     left = time.time() -timeout
-    print("left: ",left)
-    time.sleep(0.2-left)
+    #print("left: ",left)
+    if 0.2 - left > 0:
+        time.sleep(0.2-left)
 
 def send():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
