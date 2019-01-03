@@ -45,6 +45,7 @@ def start_timeout():
 def wait_timeout():
     global timeout
     left = time.time() -timeout
+    print("left: ",left)
     time.sleep(0.2-left)
 
 def send():
