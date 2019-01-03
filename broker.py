@@ -6,7 +6,7 @@ import threading
 
 print("2")
 SOURCE_TO_BROKER = '10.10.1.2'
-R1_TO_BROKER = '10.10.3.2'
+R1_TO_BROKER = '10.10.2.1'
 
 message_list = []
 
