@@ -40,7 +40,7 @@ def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
     global next_seqnum
-    sleep(1)
+    sleep(10)
     count = 0
     while 1:
         #lock.acquire()
