@@ -100,7 +100,9 @@ def send():
                 start_timeout()
                 lock.release()
         else:
+            print("HELLO")
             wait_timeout()
+            print(missing_list)
             for elem in missing_list:
                 randomvar = random.randint(1,2)
                 if randomvar == 1:
