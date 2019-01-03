@@ -58,7 +58,7 @@ def send():
                     while 1:
                         if len(seq) == 6:
                             break
-                        seq = 0 + seq
+                        seq = "0" + seq
                     print(seq)
                     message = message_list[next_seqnum] + str(seq)  
                     count +=1
@@ -76,8 +76,9 @@ def send():
                     while 1:
                         if len(seq) == 6:
                             break
-                        seq = 0 + seq
+                        seq = "0" + seq
                     print(seq)
+
                     message = message_list[next_seqnum] + str(seq)  
                     count +=1
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
