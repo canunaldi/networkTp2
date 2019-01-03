@@ -23,7 +23,8 @@ def get_message():
         message_list.append(data)
         count +=1
         if count == 195:
-            print(message_list)
+            for mes in message_list:
+                print(mes)
     conn.close()
 
 
