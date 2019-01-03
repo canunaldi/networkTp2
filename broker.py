@@ -17,7 +17,7 @@ def get_message():
     conn, addr = sock.accept() # we get the connection from the source 
     count = 0
     while 1:
-        data = conn.recv(500).decode()
+        data = conn.recv(500)
         flag = 1
         if not data:
             break
