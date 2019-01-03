@@ -3,7 +3,6 @@ import string
 import socket
 import time
 import threading
-from const import *
 import csv
 
 R1_TO_BROKER = '10.10.3.2'
