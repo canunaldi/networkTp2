@@ -9,7 +9,7 @@ SOURCE_TO_BROKER = '10.10.1.2'
 R1_TO_BROKER = '10.10.2.1'
 
 message_list = ["Deneme"]
-
+flag = 0
 def get_message():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
     sock.bind((SOURCE_TO_BROKER, 3000)) # Socket listens from the Source
@@ -18,6 +18,7 @@ def get_message():
     count = 0
     while 1:
         data = conn.recv(500).decode()
+        flag = 1
         if not data:
             break
         #print(data)
@@ -28,7 +29,8 @@ def get_message():
 def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER, 3000))
-    R1Socket.sendto(message_list[0],(R1_TO_BROKER,3001))
+    if flag == 1:
+        R1Socket.sendto(message_list[0],(R1_TO_BROKER,3001))
 
 
 
