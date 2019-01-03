@@ -4,7 +4,6 @@ import socket
 import time
 import threading
 
-print("2")
 SOURCE_TO_BROKER = '10.10.1.2'
 R1_TO_BROKER = '10.10.2.1'
 
@@ -29,14 +28,18 @@ def get_message():
 def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER, 3000))
-    if flag == 1:
-        R1Socket.sendto(message_list[0],(R1_TO_BROKER,3001))
+    while 1:
+        if flag == 1:
+            print("sending")
+            R1Socket.sendto(message_list[0],(R1_TO_BROKER,3001))
+            break
 
 
 
 broker_listen = threading.Thread(target= get_message, args=())
 broker_listen.start()
-send_r1()
+
+
 
 
 
