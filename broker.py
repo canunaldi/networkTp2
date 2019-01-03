@@ -14,12 +14,16 @@ def get_message():
     sock.bind((SOURCE_TO_BROKER, 3000)) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
     conn, addr = sock.accept() # we get the connection from the source 
+    count = 0
     while 1:
         data = conn.recv(500).decode()
         if not data:
             break
         print(data)
         message_list.append(data)
+        count +=1
+        if count == 195:
+            print(message_list)
     conn.close()
 
 
