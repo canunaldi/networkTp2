@@ -100,7 +100,8 @@ def get_ack_r1():
         data = int(data)
         if data in missing_list:
             missing_list.remove(data)
-        base = min(missing_list)
+        if len(missing_list)>0:
+            base = min(missing_list)
         print(data)
     
 
@@ -116,7 +117,8 @@ def get_ack_r2():
         data = int(data)
         if data in missing_list:
             missing_list.remove(data)
-        base = min(missing_list)
+        if len(missing_list)>0:
+            base = min(missing_list)
         print(data)
 
 
