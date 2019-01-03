@@ -15,9 +15,8 @@ R2_TO_BROKER_send = '10.10.4.1'
 
 count = 0
 lock = Lock()
-coming_messages = ''
-for i in range(200):
-    coming_messages += "x"
+coming_messages = [["0"]*200]
+
 
 def get_from_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
