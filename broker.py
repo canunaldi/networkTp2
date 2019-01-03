@@ -4,14 +4,19 @@ import socket
 import time
 import threading
 
-SOURCE_TO_BROKER = '10.10.1.2'
+SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
 R1_TO_BROKER_send = '10.10.3.2'
+window_size = 10
+base = 0
+next_seqnum = 0
+coming_messagenum=0
 
 message_list = []
 flag = 0
 def get_message():
     global flag
+    global coming_messagenum
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # new socket
     sock.bind((SOURCE_TO_BROKER, 2999)) # Socket listens from the Source
     sock.listen(2) # This socket can listen 2 connection.
@@ -20,10 +25,12 @@ def get_message():
     count = 0
     while 1:
         data = conn.recv(500)
-        flag = 1
         if not data:
             break
+        lock.acquire()
         message_list.append(data)
+        coming_messagenum += 1
+        lock.release()
         print(data)
     conn.close()
 
@@ -32,10 +39,8 @@ def send_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
     while 1:
-        if flag == 1:
-            print("sending")
+        if len(message_list) > coming_messagenum
             R1Socket.sendto(message_list[0],(R1_TO_BROKER_send,3001))
-            break
 
 
 
@@ -76,3 +81,4 @@ send_r1()
 
 
     
+
