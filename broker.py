@@ -108,6 +108,16 @@ def send():
                 R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
                 R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
                 R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
                 while 1:
                     continue
             wait_timeout()
