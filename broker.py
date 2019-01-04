@@ -4,6 +4,7 @@ import socket
 import time
 import threading
 from threading import *
+import hashlib
 
 SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
@@ -44,8 +45,8 @@ def wait_timeout():
     global timeout
     left = time.time() -timeout
     #print("left: ",left)
-    if 0.2 - left > 0:
-        time.sleep(0.2-left)
+    if 0.05 - left > 0:
+        time.sleep(0.05-left)
 
 
 
@@ -72,8 +73,11 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
+                    hash_md5 = hashlib.md5()
+                    hash_md5.update(message_list[next_seqnum])
+                    hashval = hash_md5.hexdigest()
                     #print(seq)
-                    message = message_list[next_seqnum] + str(seq)
+                    message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)  
                     count +=1
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
@@ -93,8 +97,11 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
+                    hash_md5 = hashlib.md5()
+                    hash_md5.update(message_list[next_seqnum])
+                    hashval = hash_md5.hexdigest()
 
-                    message = message_list[next_seqnum] + str(seq) 
+                    message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)   
                     count +=1
                     R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
@@ -141,7 +148,10 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    message = message_list[elem] + str(seq)
+                    hash_md5 = hashlib.md5()
+                    hash_md5.update(message_list[next_seqnum])
+                    hashval = hash_md5.hexdigest()
+                    message = message_list[elem] + str(seq) + str(hashval)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                 else:
                     seq = str(elem)
@@ -151,7 +161,10 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    message = message_list[elem] + str(seq) 
+                    hash_md5 = hashlib.md5()
+                    hash_md5.update(message_list[next_seqnum])
+                    hashval = hash_md5.hexdigest()
+                    message = message_list[elem] + str(seq) + str(hashval)
                     R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()
 

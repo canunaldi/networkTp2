@@ -38,15 +38,20 @@ def get_from_r1():
     R1Ack.bind((R1_TO_BROKER_recv,3005))
     global count
     while 1:
-        data,addr = R1Socket.recvfrom(506)
+        data,addr = R1Socket.recvfrom(522)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
         #print("Num:", count, "len:", len(data))
         #print(data)
         index = int(data[500:])
-        coming_messages[0][index] = data[:500]
-        R1Ack.sendto(data[500:],(R1_TO_BROKER_send,3004))
+        hashval = data[506:]
+        hash_md5 = hashlib.md5()
+        hash_md5.update(data[:500])
+        hashvalnew = hash_md5.hexdigest()
+        if str(hashvalnew) == hashvalnew:
+            coming_messages[0][index] = data[:500]
+            R1Ack.sendto(data[500:],(R1_TO_BROKER_send,3004))
     return
 
 def get_from_r2():
@@ -56,15 +61,21 @@ def get_from_r2():
     R2Ack.bind((R2_TO_BROKER_recv,3007))
     global count
     while 1:
-        data,addr = R2Socket.recvfrom(506)
+        data,addr = R2Socket.recvfrom(522)
         #print("Num:", count, "len:", len(data))
         #print(data)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
-        index = int(data[500:])
-        coming_messages[0][index] = data[:500]
-        R2Ack.sendto(data[500:],(R2_TO_BROKER_send,3006))
+        index = int(data[500:506])
+        
+        hashval = data[506:]
+        hash_md5 = hashlib.md5()
+        hash_md5.update(data[:500])
+        hashvalnew = hash_md5.hexdigest()
+        if str(hashvalnew) == hashvalnew:
+            coming_messages[0][index] = data[:500]
+            R2Ack.sendto(data[500:],(R2_TO_BROKER_send,3006))
     return
 
 def deneme():
