@@ -40,7 +40,7 @@ def get_from_r1():
     R1Ack.bind((R1_TO_BROKER_recv,3005))
     global count
     while 1:
-        data,addr = R1Socket.recvfrom(522)
+        data,addr = R1Socket.recvfrom(538)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
@@ -75,7 +75,8 @@ def get_from_r2():
         
         hashval = data[506:]
         hashvalnew = hashlib.md5(data[:500]).hexdigest()
-
+        print("Incoming: ", hashval)
+        print("found: ", hashvalnew)
         if str(hashvalnew) == str(hashval):
             print(index)
             coming_messages[0][index] = data[:500]
