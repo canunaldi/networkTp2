@@ -109,6 +109,9 @@ def send():
             print(missing_list)
             if missing_list != []:
                 minelem = min(missing_list)
+            else:
+                base = next_seqnum
+                continue
             for elem in missing_list:
                 randomvar = random.randint(1,2)
                 if randomvar == 1:
