@@ -59,7 +59,7 @@ def send():
     global missing_list
     count = 0
     while 1:
-        if (next_seqnum - base) < 10 and next_seqnum<200:
+        if (next_seqnum - base) < 10 and next_seqnum<10000:
             randomvar = random.randint(1,2)
             if randomvar == 1:
                 lock.acquire()
@@ -105,7 +105,7 @@ def send():
         
         else:
             #print("NSN: ",next_seqnum)
-            if next_seqnum >= 200 and missing_list == []:
+            if next_seqnum >= 10000 and missing_list == []:
                 #print("ASFSADFDFDA GELDIIIIMM")
                 message = ["x"*506]
                 #print(message[0])
