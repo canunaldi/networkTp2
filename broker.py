@@ -168,7 +168,7 @@ def get_ack_r1():
         if data in missing_list:
             missing_list.remove(data)
         if len(missing_list)>0:
-            base = min(missing_list)
+            base = min(missing_list-1)
         lock.release()
 
     
@@ -188,7 +188,7 @@ def get_ack_r2():
         if data in missing_list:
             missing_list.remove(data)
         if len(missing_list)>0:
-            base = min(missing_list)
+            base = min(missing_list-1)
         lock.release()
 
 
