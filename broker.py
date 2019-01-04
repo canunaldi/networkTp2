@@ -104,6 +104,7 @@ def send():
                 lock.release()
         
         else:
+            print("NSN: ",next_seqnum)
             if next_seqnum >= 200 and missing_list == []:
                 print("ASFSADFDFDA GELDIIIIMM")
                 message = ["x"*506]
