@@ -97,9 +97,9 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
-                    hash_md5 = hashlib.md5()
+                    hash_md5 = md5.new()
                     hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.hexdigest()
+                    hashval = hash_md5.digest()
 
                     message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)   
@@ -148,9 +148,9 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    hash_md5 = hashlib.md5()
+                    hash_md5 = md5.new()
                     hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.hexdigest()
+                    hashval = hash_md5.digest()
                     message = message_list[elem] + str(seq) + str(hashval)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                 else:
@@ -161,9 +161,9 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    hash_md5 = hashlib.md5()
+                    hash_md5 = md5.new()
                     hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.hexdigest()
+                    hashval = hash_md5.digest()
                     message = message_list[elem] + str(seq) + str(hashval)
                     R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()
