@@ -42,6 +42,7 @@ def get_from_r1():
             finish()
             break
         #print("Num:", count, "len:", len(data))
+        print(data)
         index = int(data[500:])
         coming_messages[0][index] = data[:500]
         R1Ack.sendto(data[500:],(R1_TO_BROKER_send,3004))
@@ -56,6 +57,7 @@ def get_from_r2():
     while 1:
         data,addr = R2Socket.recvfrom(506)
         #print("Num:", count, "len:", len(data))
+        print(data)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data[0]:
             finish()
             break
