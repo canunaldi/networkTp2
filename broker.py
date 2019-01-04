@@ -4,7 +4,7 @@ import socket
 import time
 import threading
 from threading import *
-import md5
+import hashlib
 
 SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
@@ -73,9 +73,8 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    hash_md5 = md5.new()
-                    hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.digest()
+                    hashval = hashlib.md5(message_list[next_seqnum]).hexdigest()
+
                     #print(seq)
                     message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)  
@@ -97,9 +96,8 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
-                    hash_md5 = md5.new()
-                    hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.digest()
+                    hashval = hashlib.md5(message_list[next_seqnum]).hexdigest()
+
 
                     message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)   
@@ -148,9 +146,8 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    hash_md5 = md5.new()
-                    hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.digest()
+                    hashval = hashlib.md5(message_list[elem]).hexdigest()
+
                     message = message_list[elem] + str(seq) + str(hashval)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                 else:
@@ -161,9 +158,8 @@ def send():
                         seq = "0" + seq
                     #print(seq)
                     base = minelem
-                    hash_md5 = md5.new()
-                    hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.digest()
+                    hashval = hashlib.md5(message_list[elem]).hexdigest()
+
                     message = message_list[elem] + str(seq) + str(hashval)
                     R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()

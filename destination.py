@@ -5,7 +5,7 @@ import time
 import threading
 import csv
 from threading import *
-import md5
+import hashlib
 
 
 
@@ -48,9 +48,8 @@ def get_from_r1():
         #print(data)
         index = int(data[500:506])
         hashval = data[506:]
-        hash_md5 = md5.new()
-        hash_md5.update(data[:500])
-        hashvalnew = hash_md5.digest()
+        hashvalnew = hashlib.md5(data[:500]).hexdigest()
+
         print("Incoming: ", hashval)
         print("found: ", hashvalnew)
         if str(hashvalnew) == str(hashval):
@@ -75,9 +74,8 @@ def get_from_r2():
         index = int(data[500:506])
         
         hashval = data[506:]
-        hash_md5 = md5.new()
-        hash_md5.update(data[:500])
-        hashvalnew = hash_md5.digest()
+        hashvalnew = hashlib.md5(data[:500]).hexdigest()
+
         if str(hashvalnew) == str(hashval):
             print(index)
             coming_messages[0][index] = data[:500]
