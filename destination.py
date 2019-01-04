@@ -81,4 +81,4 @@ th2 = threading.Thread(target=get_from_r2)
 
 th1.start()
 th2.start()
-deneme()
+#deneme()
