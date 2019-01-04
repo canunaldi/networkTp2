@@ -57,7 +57,7 @@ def send():
     global missing_list
     count = 0
     while 1:
-        if (next_seqnum - base) < 10 and next_seqnum<200:
+        if (next_seqnum - base) < 10 :
             randomvar = random.randint(1,2)
             if randomvar == 1:
                 lock.acquire()
@@ -100,35 +100,7 @@ def send():
                     #time.sleep(0.2)
                 start_timeout()
                 lock.release()
-        elif missing_list != [] and next_seqnum>200:
-            wait_timeout()
-            print(missing_list)
-            for elem in missing_list:
-                randomvar = random.randint(1,2)
-                if randomvar == 1:
-                    seq = str(elem)
-                    while 1:
-                        if len(seq) == 6:
-                            break
-                        seq = "0" + seq
-                    #print(seq)
-                    base = elem
-                    message = message_list[elem] + str(seq)
-                    R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                else:
-                    seq = str(elem)
-                    while 1:
-                        if len(seq) == 6:
-                            break
-                        seq = "0" + seq
-                    #print(seq)
-                    base = elem
-                    message = message_list[elem] + str(seq) 
-                    R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                start_timeout()
-        elif missing_list == []:
-            while 1:
-                continue
+        
         else:
             print("HELLO")
             print("Base: ",base)
