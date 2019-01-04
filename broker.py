@@ -59,7 +59,7 @@ def send():
     global missing_list
     count = 0
     while 1:
-        if (next_seqnum - base) < 10 :
+        if (next_seqnum - base) < 10 and next_seqnum<200:
             randomvar = random.randint(1,2)
             if randomvar == 1:
                 lock.acquire()
