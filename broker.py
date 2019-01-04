@@ -104,18 +104,7 @@ def send():
                 lock.release()
         
         else:
-            if next_seqnum > 200 and missing_list == []:
-                message = ["x"*506]
-                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
-                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
-                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
+            
             print("HELLO")
             print("Base: ",base)
             print("Nextseq: ", next_seqnum)
