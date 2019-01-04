@@ -107,6 +107,8 @@ def send():
             print("Nextseq: ", next_seqnum)
             wait_timeout()
             print(missing_list)
+            if missing_list != []:
+                minelem = min(missing_list)
             for elem in missing_list:
                 randomvar = random.randint(1,2)
                 if randomvar == 1:
@@ -116,7 +118,7 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
-                    base = elem
+                    base = minelem
                     message = message_list[elem] + str(seq)
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                 else:
@@ -126,7 +128,7 @@ def send():
                             break
                         seq = "0" + seq
                     #print(seq)
-                    base = elem
+                    base = minelem
                     message = message_list[elem] + str(seq) 
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()
