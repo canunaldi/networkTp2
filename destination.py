@@ -27,7 +27,8 @@ def finish():
         i +=1
         result += elem
     print(indexes)
-    print(result)
+    with open("result.txt", "w") as f:
+        f.write(result)
     return
 
 def get_from_r1():
