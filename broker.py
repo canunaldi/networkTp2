@@ -47,6 +47,8 @@ def wait_timeout():
     if 0.2 - left > 0:
         time.sleep(0.2-left)
 
+
+
 def send():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     R1Socket.bind((R1_TO_BROKER_bind, 3000))
@@ -95,13 +97,25 @@ def send():
                     message = message_list[next_seqnum] + str(seq) 
                     missing_list.append(next_seqnum)   
                     count +=1
-                    R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                    R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                     next_seqnum +=1
                     #time.sleep(0.2)
                 start_timeout()
                 lock.release()
         
         else:
+            if next_seqnum > 200 and missing_list == []:
+                message = ["x"*506]
+                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
+                R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
             print("HELLO")
             print("Base: ",base)
             print("Nextseq: ", next_seqnum)
@@ -133,7 +147,7 @@ def send():
                     #print(seq)
                     base = minelem
                     message = message_list[elem] + str(seq) 
-                    R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
+                    R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()
 
             
