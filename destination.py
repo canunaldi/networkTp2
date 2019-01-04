@@ -76,8 +76,8 @@ def deneme():
             indexes.append(i)
         i +=1
         result += elem
-    print(indexes)
-    print(result)
+    #print(indexes)
+    #print(result)
 
 
 th1 = threading.Thread(target=get_from_r1)

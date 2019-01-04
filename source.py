@@ -15,7 +15,6 @@ def generate_message(): # Generates message with using Id and current time
     id +=1 # the id increased for the next packet 
     return "".join(str(id)+ " " + str(currtime)) # Returns "2549 1543765603052" for example Id + Time
 
-
 sock = socket(AF_INET, SOCK_STREAM) # new socket
 sock.connect((SOURCE_TO_BROKER, 2999)) # Connects to the link between source and the broker
 

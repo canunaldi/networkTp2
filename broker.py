@@ -108,7 +108,7 @@ def send():
             if next_seqnum >= 200 and missing_list == []:
                 #print("ASFSADFDFDA GELDIIIIMM")
                 message = ["x"*506]
-                print(message[0])
+                #print(message[0])
                 R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
                 R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
                 R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
