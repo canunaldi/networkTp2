@@ -38,7 +38,7 @@ def get_from_r1():
     global count
     while 1:
         data,addr = R1Socket.recvfrom(506)
-        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
+        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data[0]:
             finish()
             break
         #print("Num:", count, "len:", len(data))
@@ -55,7 +55,7 @@ def get_from_r2():
     while 1:
         data,addr = R2Socket.recvfrom(506)
         #print("Num:", count, "len:", len(data))
-        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
+        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data[0]:
             finish()
             break
         index = int(data[500:])
