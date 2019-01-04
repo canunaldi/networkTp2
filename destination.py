@@ -28,9 +28,9 @@ def finish():
             indexes.append(i)
         i +=1
         result += elem
-    print(indexes)
     with open("result.txt", "w") as f:
         f.write(result)
+    print(time.time())
     return
 
 def get_from_r1():
@@ -44,16 +44,11 @@ def get_from_r1():
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
-        #print("Num:", count, "len:", len(data))
-        #print(data)
         index = int(data[500:506])
         hashval = data[506:]
         hashvalnew = hashlib.md5(data[:500]).hexdigest()
 
-        print("Incoming: ", hashval)
-        print("found: ", hashvalnew)
         if str(hashvalnew) == str(hashval):
-            print(index)
             coming_messages[0][index] = data[:500]
             R1Ack.sendto(data[500:506],(R1_TO_BROKER_send,3004))
     return
@@ -66,8 +61,6 @@ def get_from_r2():
     global count
     while 1:
         data,addr = R2Socket.recvfrom(538)
-        #print("Num:", count, "len:", len(data))
-        #print(data)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
@@ -75,10 +68,7 @@ def get_from_r2():
         
         hashval = data[506:]
         hashvalnew = hashlib.md5(data[:500]).hexdigest()
-        print("Incoming: ", hashval)
-        print("found: ", hashvalnew)
         if str(hashvalnew) == str(hashval):
-            print(index)
             coming_messages[0][index] = data[:500]
             R2Ack.sendto(data[500:506],(R2_TO_BROKER_send,3006))
     return
@@ -93,8 +83,6 @@ def deneme():
             indexes.append(i)
         i +=1
         result += elem
-    #print(indexes)
-    #print(result)
 
 
 th1 = threading.Thread(target=get_from_r1)

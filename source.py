@@ -1,8 +1,5 @@
-import random
-import string
 from socket import socket, AF_INET, SOCK_STREAM
 import time
-import threading
 
 SOURCE_TO_BROKER = '10.10.1.2'
 
@@ -19,8 +16,7 @@ sock = socket(AF_INET, SOCK_STREAM) # new socket
 sock.connect((SOURCE_TO_BROKER, 2999)) # Connects to the link between source and the broker
 
 with open("input.txt", "r") as f:
+    print(time.time())
     for i in range(10000):
         message = f.read(500)
-        #print(message)
-        print(len(message))
         sock.send(message)

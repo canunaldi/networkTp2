@@ -31,10 +31,8 @@ def get_message():
         data = conn.recv(500,socket.MSG_WAITALL)
         if not data:
             break
-        #print("ML:",count, " len:",len(data))
         message_list.append(data)
         count +=1
-        #print(data)
     conn.close()
 
 def start_timeout():
@@ -44,7 +42,6 @@ def start_timeout():
 def wait_timeout():
     global timeout
     left = time.time() -timeout
-    #print("left: ",left)
     if 0.05 - left > 0:
         time.sleep(0.05-left)
 
@@ -65,9 +62,6 @@ def send():
             if randomvar == 1:
                 lock.acquire()
                 if len(message_list) > next_seqnum:
-                    #print("ML: ",len(message_list)) 
-                    #print("NSq:", next_seqnum)
-                    #print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
                     seq = str(next_seqnum)
                     while 1:
                         if len(seq) == 6:
@@ -75,27 +69,21 @@ def send():
                         seq = "0" + seq
                     hashval = hashlib.md5(message_list[next_seqnum]).hexdigest()
 
-                    #print(seq)
                     message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)  
                     count +=1
                     R1Socket.sendto(message,(R1_TO_BROKER_send,3001))
                     next_seqnum +=1
-                    #time.sleep(0.2)
                 start_timeout()
                 lock.release()
             else:
                 lock.acquire()
                 if len(message_list) > next_seqnum:
-                    #print("ML: ",len(message_list)) 
-                    #print("NSq:", next_seqnum)
-                    #print("Send:", next_seqnum, " len:",len(message_list[next_seqnum]))
                     seq = str(next_seqnum)
                     while 1:
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
                     hashval = hashlib.md5(message_list[next_seqnum]).hexdigest()
 
 
@@ -104,16 +92,12 @@ def send():
                     count +=1
                     R2Socket.sendto(message,(R2_TO_BROKER_send,3003))
                     next_seqnum +=1
-                    #time.sleep(0.2)
                 start_timeout()
                 lock.release()
         
         else:
-            #print("NSN: ",next_seqnum)
             if next_seqnum >= 10000 and missing_list == []:
-                #print("ASFSADFDFDA GELDIIIIMM")
                 message = ["x"*506]
-                #print(message[0])
                 R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
                 R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
                 R1Socket.sendto(message[0],(R1_TO_BROKER_send,3001))
@@ -126,11 +110,7 @@ def send():
                 R2Socket.sendto(message[0],(R2_TO_BROKER_send,3003))
                 while 1:
                     continue
-            #print("HELLO")
-            #print("Base: ",base)
-            #print("Nextseq: ", next_seqnum)
             wait_timeout()
-            print(missing_list)
             if missing_list != []:
                 minelem = min(missing_list)
             else:
@@ -144,7 +124,6 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
                     base = minelem
                     hashval = hashlib.md5(message_list[elem]).hexdigest()
 
@@ -156,7 +135,6 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
                     base = minelem
                     hashval = hashlib.md5(message_list[elem]).hexdigest()
 
@@ -182,7 +160,6 @@ def get_ack_r1():
         if len(missing_list)>0:
             base = min(missing_list)
         lock.release()
-        #print("ACK: ", data)
 
     
 
@@ -203,8 +180,6 @@ def get_ack_r2():
         if len(missing_list)>0:
             base = min(missing_list)
         lock.release()
-
-        #print("ACK: ", data)
 
 
 
