@@ -72,7 +72,7 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
+                    print(seq)
                     message = message_list[next_seqnum] + str(seq)
                     missing_list.append(next_seqnum)  
                     count +=1
@@ -92,7 +92,7 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
+                    print(seq)
 
                     message = message_list[next_seqnum] + str(seq) 
                     missing_list.append(next_seqnum)   
@@ -105,9 +105,9 @@ def send():
         
         else:
             
-            print("HELLO")
-            print("Base: ",base)
-            print("Nextseq: ", next_seqnum)
+            #print("HELLO")
+            #print("Base: ",base)
+            #print("Nextseq: ", next_seqnum)
             wait_timeout()
             print(missing_list)
             if missing_list != []:
