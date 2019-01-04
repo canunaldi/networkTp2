@@ -27,7 +27,7 @@ def get_message():
     conn, addr = sock.accept() # we get the connection from the source
     count = 0
     while 1:
-        data = conn.recv(500,socket.MSG_WAITALL).decode()
+        data = conn.recv(500,socket.MSG_WAITALL)
         if not data:
             break
         #print("ML:",count, " len:",len(data))

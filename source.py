@@ -23,4 +23,4 @@ with open("input.txt", "r") as f:
         message = f.read(500)
         #print(message)
         print(len(message))
-        sock.send(message.encode())
+        sock.send(message)
