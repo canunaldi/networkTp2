@@ -45,6 +45,7 @@ def get_from_r1():
         index = int(data[500:])
         coming_messages[0][index] = data[:500]
         R1Ack.sendto(data[500:],(R1_TO_BROKER_send,3004))
+    return
 
 def get_from_r2():
     R2Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -61,6 +62,7 @@ def get_from_r2():
         index = int(data[500:])
         coming_messages[0][index] = data[:500]
         R2Ack.sendto(data[500:],(R2_TO_BROKER_send,3006))
+    return
 
 def deneme():
     time.sleep(20)
