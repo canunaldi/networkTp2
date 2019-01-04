@@ -129,9 +129,6 @@ def send():
                     message = message_list[elem] + str(seq) 
                     R1Socket.sendto(message,(R2_TO_BROKER_send,3003))
                 start_timeout()
-            lock.acquire()
-            missing_list = []
-            lock.release()
             
 
 
