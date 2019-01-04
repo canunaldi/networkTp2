@@ -72,7 +72,7 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
+                    print(seq)
                     message = message_list[next_seqnum] + str(seq)
                     missing_list.append(next_seqnum)  
                     count +=1
@@ -92,7 +92,7 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    #print(seq)
+                    print(seq)
 
                     message = message_list[next_seqnum] + str(seq) 
                     missing_list.append(next_seqnum)   
@@ -173,7 +173,7 @@ def get_ack_r1():
         if len(missing_list)>0:
             base = min(missing_list)
         lock.release()
-        #print("ACK: ", data)
+        print("ACK: ", data)
 
     
 
@@ -195,7 +195,7 @@ def get_ack_r2():
             base = min(missing_list)
         lock.release()
 
-        #print("ACK: ", data)
+        print("ACK: ", data)
 
 
 
