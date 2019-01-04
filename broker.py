@@ -150,7 +150,7 @@ def get_ack_r1():
         if len(missing_list)>0:
             base = min(missing_list)
         lock.release()
-        print(data)
+        print("ACK: ", data)
 
     
 
@@ -172,7 +172,7 @@ def get_ack_r2():
             base = min(missing_list)
         lock.release()
 
-        print(data)
+        print("ACK: ", data)
 
 
 
