@@ -65,7 +65,7 @@ def get_from_r2():
     R2Ack.bind((R2_TO_BROKER_recv,3007))
     global count
     while 1:
-        data,addr = R2Socket.recvfrom(522)
+        data,addr = R2Socket.recvfrom(538)
         #print("Num:", count, "len:", len(data))
         #print(data)
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
