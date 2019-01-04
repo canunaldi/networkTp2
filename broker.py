@@ -4,7 +4,7 @@ import socket
 import time
 import threading
 from threading import *
-import hashlib
+import md5
 
 SOURCE_TO_BROKER  = '10.10.1.2'
 R1_TO_BROKER_bind = '10.10.2.1'
@@ -73,9 +73,9 @@ def send():
                         if len(seq) == 6:
                             break
                         seq = "0" + seq
-                    hash_md5 = hashlib.md5()
+                    hash_md5 = md5.new()
                     hash_md5.update(message_list[next_seqnum])
-                    hashval = hash_md5.hexdigest()
+                    hashval = hash_md5.digest()
                     #print(seq)
                     message = message_list[next_seqnum] + str(seq) + str(hashval)
                     missing_list.append(next_seqnum)  
