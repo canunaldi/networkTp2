@@ -60,71 +60,25 @@ This file connects to the "destination" node in our slice. By using threading, g
 
 # EXPERIMENTS
 
-We take tc qdisc change dev eth0 root netem delay 20ms 5ms distribution normal code as a base for our experiments.
+We have created multiple slices and we have observed that we only need to change the broker's eth1 and eth3 interfaces (which route to r1 and r2), eth1 interface on r1 and eth2 interface on r2.
+The commands executed to provide that are: 
 
-The eth0 changes in each link. We found which eth can be used by using ifconfig.
-
-## Experiment 1
-
-In this experiment we used the following commands:
-
-At b:
+On broker:
 ```bash
-sudo tc qdisc add dev eth1 root netem delay 1ms 5ms distribution normal
-sudo tc qdisc add dev eth2 root netem delay 1ms 5ms distribution normal
+sudo tc qdisc add dev eth1 root netem loss {LOSS}% corrupt {CORRUPT}% duplicate 0% delay 3ms reorder {REORDER}
+sudo tc qdisc add dev eth3 root netem loss {LOSS}%  corrupt {CORRUPT}% duplicate 0% delay 3 ms reorder {REORDER}
 ```
-At r1:
+On r1:
 ```bash
-sudo tc qdisc add dev eth2 root netem delay 1ms 5ms distribution normal
+sudo tc qdisc add dev eth1 root netem loss {LOSS}% corrupt {CORRUPT}% duplicate 0% delay 3ms reorder {REORDER}
 ```
-At r2:
+On r2:
 ```bash
-sudo tc qdisc add dev eth2 root netem delay 1ms 5ms distribution normal
+sudo tc qdisc add dev eth2 root netem loss {LOSS}% corrupt {CORRUPT}% duplicate 0% delay 3ms reorder {REORDER}
 ```
-Note: You can use change command instead of add if you already have tc at the slices.
 
-The experiment results comming from the d stored at results.csv
-
-## Experiment 2
-
-In this experiment we used the following commands:
-
-At b:
-```bash
-sudo tc qdisc change dev eth1 root netem delay 20ms 5ms distribution normal
-sudo tc qdisc change dev eth2 root netem delay 20ms 5ms distribution normal
-```
-At r1:
-```bash
-sudo tc qdisc change dev eth2 root netem delay 20ms 5ms distribution normal
-```
-At r2:
-```bash
-sudo tc qdisc change dev eth2 root netem delay 20ms 5ms distribution normal
-```
-Note: change command used since we've already added tc to the slices.
-
-
-## Experiment 3
-
-In this experiment we used the following commands:
-
-At b:
-```bash
-sudo tc qdisc change dev eth1 root netem delay 60ms 5ms distribution normal
-sudo tc qdisc change dev eth2 root netem delay 60ms 5ms distribution normal
-```
-At r1:
-```bash
-sudo tc qdisc change dev eth2 root netem delay 60ms 5ms distribution normal
-```
-At r2:
-```bash
-sudo tc qdisc change dev eth2 root netem delay 60ms 5ms distribution normal
-```
-Note: change command used since we've already added tc to the slices.
-
-
+In these commands `{LOSS}`, `{CORRUPT}` and `{REORDER}` are values that are given in homework text and that change based on experiment
+If these commands are applied with `change` instead of `add` as 3rd argument sometimes the interface configuration doesn't exist, which results with an error.
 # Useful Commands
 
 * To close the running python script. (The Ctrl+C does not work for scripts using threads)
