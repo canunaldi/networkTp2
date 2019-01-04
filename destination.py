@@ -54,6 +54,7 @@ def get_from_r1():
         print("Incoming: ", hashval)
         print("found: ", hashvalnew)
         if str(hashvalnew) == str(hashval):
+            print(index)
             coming_messages[0][index] = data[:500]
             R1Ack.sendto(data[500:506],(R1_TO_BROKER_send,3004))
     return
@@ -77,7 +78,8 @@ def get_from_r2():
         hash_md5 = md5.new()
         hash_md5.update(data[:500])
         hashvalnew = hash_md5.digest()
-        if str(hashvalnew) == hashvalnew:
+        if str(hashvalnew) == str(hashval):
+            print(index)
             coming_messages[0][index] = data[:500]
             R2Ack.sendto(data[500:506],(R2_TO_BROKER_send,3006))
     return
