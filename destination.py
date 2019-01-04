@@ -17,6 +17,18 @@ count = 0
 lock = Lock()
 coming_messages = [["0"]*200]
 
+def finish():
+    result = ''
+    i = 0
+    indexes = []
+    for elem in coming_messages[0]:
+        if '0' in elem:
+            indexes.append(i)
+        i +=1
+        result += elem
+    print(indexes)
+    print(result)
+    return
 
 def get_from_r1():
     R1Socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -26,6 +38,9 @@ def get_from_r1():
     global count
     while 1:
         data,addr = R1Socket.recvfrom(506)
+        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
+            finish()
+            break
         #print("Num:", count, "len:", len(data))
         index = int(data[500:])
         coming_messages[0][index] = data[:500]
@@ -40,6 +55,9 @@ def get_from_r2():
     while 1:
         data,addr = R2Socket.recvfrom(506)
         #print("Num:", count, "len:", len(data))
+        if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
+            finish()
+            break
         index = int(data[500:])
         coming_messages[0][index] = data[:500]
         R2Ack.sendto(data[500:],(R2_TO_BROKER_send,3006))
