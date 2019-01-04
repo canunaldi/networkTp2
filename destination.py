@@ -44,7 +44,10 @@ def get_from_r1():
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
-        index = int(data[500:506])
+        try:
+            index = int(data[500:506])
+        except:
+            continue
         hashval = data[506:]
         hashvalnew = hashlib.md5(data[:500]).hexdigest()
 
@@ -64,8 +67,10 @@ def get_from_r2():
         if "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" in data:
             finish()
             break
-        index = int(data[500:506])
-        
+        try:
+            index = int(data[500:506])
+        except:
+            continue
         hashval = data[506:]
         hashvalnew = hashlib.md5(data[:500]).hexdigest()
         if str(hashvalnew) == str(hashval):
